@@ -13,11 +13,23 @@ contract('KingPinNFT', accounts => {
   })
 
   it('mint function test', async()=>{
-    const reciever = '0x4166198139e260a0404334C1BF1b559B3bd1BEB4';
-    await this.kingPinNFT.mint(reciever, 50);
-    await this.kingPinNFT.mint(reciever, 51);
-    let balance = await this.kingPinNFT.balanceOf(reciever);
+    await this.kingPinNFT.mint(accounts[1], 50,'text for #50 NFT', {value: web3.utils.toWei('1','ether')});
+    await this.kingPinNFT.mint(accounts[1], 51, 'text for #51 NFT', {value: web3.utils.toWei('1','ether')});
+    let balance = await this.kingPinNFT.balanceOf(accounts[1]);
     let address = await this.kingPinNFT.address;
     assert.equal(balance, 2)
+    console.log(address);
   })
+
+  it('airdrop eligibility updates', async()=>{
+    let res = await this.kingPinNFT.updateAirdropEligibility(accounts[1], true);
+    let event = res.logs[0].args;
+    assert.equal(event.owner, accounts[1]);
+    assert.equal(event.eligibility, true);
+  })
+
+  // it('eligibility changes on transfer',async()=>{
+  //   let res = await this.kingPinNFT.transfer(accounts[1],accounts[2],50);
+  //   console.log(res.logs[0].args);
+  // })
 })
