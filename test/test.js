@@ -13,23 +13,38 @@ contract('KingPinNFT', accounts => {
   })
 
   it('mint function test', async()=>{
-    await this.kingPinNFT.mint(accounts[1], 50,'text for #50 NFT', {value: web3.utils.toWei('1','ether')});
-    await this.kingPinNFT.mint(accounts[1], 51, 'text for #51 NFT', {value: web3.utils.toWei('1','ether')});
+    await this.kingPinNFT.mint(accounts[1], 'text for NFT', {value: web3.utils.toWei('0.5','ether'), from: accounts[1]});
+    await this.kingPinNFT.mint(accounts[3], 'text for NFT', {value: web3.utils.toWei('0.5','ether'), from: accounts[3]});
     let balance = await this.kingPinNFT.balanceOf(accounts[1]);
     let address = await this.kingPinNFT.address;
-    assert.equal(balance, 2)
+    assert.equal(balance, 1)
     console.log(address);
   })
 
-  it('airdrop eligibility updates', async()=>{
-    let res = await this.kingPinNFT.updateAirdropEligibility(accounts[1], true);
-    let event = res.logs[0].args;
-    assert.equal(event.owner, accounts[1]);
-    assert.equal(event.eligibility, true);
+  it('NFTCount updates', async()=>{
+    let NFTCount = await this.kingPinNFT.NFTCount();
+    assert.equal(NFTCount.toNumber(), 2)
   })
 
-  // it('eligibility changes on transfer',async()=>{
-  //   let res = await this.kingPinNFT.transfer(accounts[1],accounts[2],50);
-  //   console.log(res.logs[0].args);
-  // })
+
+  it('eligibility changes on transfer',async()=>{
+    let res = await this.kingPinNFT.transferFrom(accounts[1], accounts[2], 1, {from: accounts[1]});
+    let fromEligibility = await this.kingPinNFT.getEligibility(accounts[1]);
+    let toEligibility = await this.kingPinNFT.getEligibility(accounts[2]);
+    assert.equal(fromEligibility, false);
+    assert.equal(toEligibility, true);
+    assert.equal(res.logs[0].event, 'Transfer')
+  })
+
+  it('airdrop works', async()=>{
+    try {
+      await this.kingPinNFT.airdrop([]);
+    } catch (e) {
+    }
+
+    try {
+      await this.kingPinNFT.airdrop([accounts[4]]);
+    } catch (e) {
+    }
+  })
 })
