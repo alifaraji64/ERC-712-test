@@ -3,8 +3,9 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract KingPinNFT is ERC721, Ownable {
+contract KingPinNFT is ERC721, Ownable, ERC721Enumerable  {
     uint256 public NFTCount = 0;
     mapping(address => bool) private _airdropEligibility;
 
@@ -43,5 +44,15 @@ contract KingPinNFT is ERC721, Ownable {
             _safeMint(recipient, NFTCount, bytes("some random data"));
             _airdropEligibility[recipient] = false;
         }
+    }
+
+    function getOwnedNFTs(address owner) external view returns (uint256[] memory) {
+        uint256[] memory ownedTokens = new uint256[](balanceOf(owner));
+
+        for (uint256 i = 0; i < balanceOf(owner); i++) {
+            ownedTokens[i] = tokenByIndex(tokenOfOwnerByIndex(owner, i));
+        }
+
+        return ownedTokens;
     }
 }

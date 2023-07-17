@@ -1,19 +1,23 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { ContractContext } from '../context/contract';
+import { Link, useLoaderData } from 'react-router-dom';
 const HomeScreen = () => {
+    const contractContext = useContext(ContractContext);
     return (
-        <div className="flex two four-500 six-800 demo">
-            <div><span>1</span></div>
-            <div><span>2</span></div>
-            <div className="full half-500 third-800"><span>3</span></div>
-            <div><span>4</span></div>
-            <div><span>5</span></div>
-            <div><span>6</span></div>
-            <div><span>7</span></div>
-            <div><span>8</span></div>
-            <div><span>9</span></div>
-            <div className="off-half off-fourth-500 off-sixth-800"><span>10</span></div>
-        </div>
+        <>
+            <div>
+                <center>
+                    <h1>Welcome to KingpinNFT</h1>
+                    <p>login to mint your NFT and be eligible for an airdrop</p>
+                    <p>if you've already minted an NFT you can see when you are logged in</p>
+                </center>
+            </div>
+            <div className='flex two center demo'>
+            <Link className="button success half" to='/mint'>Mint Your KingpinNFT</Link>
+                {(contractContext.contract && contractContext.address) ? <button className="button error half">Disconnect Your Wallet</button> : null}
+            </div>
+
+        </>
     );
 }
 

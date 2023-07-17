@@ -67,4 +67,9 @@ contract('KingPinNFT', accounts => {
     assert.equal(one, false)
     assert.equal(two, false)
   })
+
+  it('owned tokens',async()=>{
+    let res = await this.kingPinNFT.getOwnedNFTs('0x163C3091161Ed30D872004BF67F23E3D4C47e380')
+    console.log(res);
+  })
 })
