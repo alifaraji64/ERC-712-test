@@ -13,13 +13,13 @@ contract('KingPinNFT', accounts => {
   })
 
   it('mint function test', async () => {
-    await this.kingPinNFT.mint(accounts[1], 'text for NFT', {
+    await this.kingPinNFT.mint(accounts[1], 'text for NFT 1', {
       value: web3.utils.toWei('0.5', 'ether'),
       from: accounts[1]
     })
     // id=>1
 
-    await this.kingPinNFT.mint(accounts[3], 'text for NFT', {
+    await this.kingPinNFT.mint(accounts[3], 'text for NFT 2', {
       value: web3.utils.toWei('0.5', 'ether'),
       from: accounts[3]
     })
@@ -55,7 +55,7 @@ contract('KingPinNFT', accounts => {
       await this.kingPinNFT.airdrop([accounts[4]])
     } catch (e) {}
 
-    await this.kingPinNFT.airdrop([accounts[2]/* id=>3 */, accounts[3]/* id=>4 */])
+    await this.kingPinNFT.airdrop([accounts[2]/* id=>3 */, accounts[3]/* id=>4 */],['id of this nft is 3','id of this nft is 4'])
     let lastAirdroppedNFTID = await this.kingPinNFT.NFTCount()
     let owner = await this.kingPinNFT.ownerOf(lastAirdroppedNFTID)
     assert.equal(owner, accounts[3])
@@ -68,8 +68,13 @@ contract('KingPinNFT', accounts => {
     assert.equal(two, false)
   })
 
-  it('owned tokens',async()=>{
-    let res = await this.kingPinNFT.getOwnedNFTs('0x163C3091161Ed30D872004BF67F23E3D4C47e380')
-    console.log(res);
+  it('getting owned NFTs', async()=>{
+    let ownedNFTs = await this.kingPinNFT.getOwnedNFTs(accounts[3]);
+    // [
+    //   [ '2', 'text for NFT 2', id: '2', data: 'text for NFT 2' ],
+    //   [ '4', 'id of this nft is 4', id: '4', data: 'id of this nft is 4' ]
+    // ]
+    assert.equal(ownedNFTs[0].id, '2')
+    assert.equal(ownedNFTs[1].id, '4')
   })
 })
