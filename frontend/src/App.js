@@ -9,14 +9,15 @@ import HomeScreen from './pages/HomeScreen'
 import MintScreen, { nftLoader } from './pages/MintScreen'
 import MintedScreen from './pages/MintedScreen'
 import Navbar from './components/Navbar'
-import { ContractProvider } from './context/contract'
+import { ContractContext, ContractProvider } from './context/contract'
+import ProtectedRoute from './context/protectedRoute'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/'>
+    <Route path='/' element={<Navbar/>}>
       <Route index element={<HomeScreen />} />
       <Route path='mint' element={<MintScreen />} loader={nftLoader}/>
-      <Route path='minted/:address' element={<MintedScreen />} />
+      <Route path='minted' element={ <ProtectedRoute redirectTo={'/'}> <MintedScreen/> </ProtectedRoute> }/>
     </Route>
   )
 )
@@ -25,7 +26,6 @@ function App () {
   return (
     <div className='App'>
       <ContractProvider>
-        <Navbar />
         <br />
         <br />
         <br />

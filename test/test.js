@@ -76,5 +76,11 @@ contract('KingPinNFT', accounts => {
     // ]
     assert.equal(ownedNFTs[0].id, '2')
     assert.equal(ownedNFTs[1].id, '4')
+    try {
+      const invalidAddress = '0x5765765';
+      await this.kingPinNFT.getOwnedNFTs(invalidAddress);
+    } catch (e) {
+      assert.equal(e.code, "INVALID_ARGUMENT")
+    }
   })
 })
