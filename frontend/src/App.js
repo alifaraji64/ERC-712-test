@@ -11,6 +11,7 @@ import MintedScreen from './pages/MintedScreen'
 import Navbar from './components/Navbar'
 import { ContractContext, ContractProvider } from './context/contract'
 import ProtectedRoute from './context/protectedRoute'
+import OwnerScreen from './pages/OwnerScreen'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route index element={<HomeScreen />} />
       <Route path='mint' element={<MintScreen />} loader={nftLoader}/>
       <Route path='minted' element={ <ProtectedRoute redirectTo={'/'}> <MintedScreen/> </ProtectedRoute> }/>
+      <Route path='owner' element={ <ProtectedRoute redirectTo={'/'} onlyOwner={true}> <OwnerScreen/> </ProtectedRoute> }/>
     </Route>
   )
 )
