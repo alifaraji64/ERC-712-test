@@ -22,12 +22,19 @@ export const ContractProvider = ({ children }) => {
     console.log('bam');
     if (!contract) return;
     let res = await contract.methods.owner().call();
-    console.log(res + ' ' + address);
+    //console.log(res + ' ' + address);
     setIsOwner(res == address);
   }
 
+  const disconnect = ()=>{
+    setContract(null);
+    setAddress(null);
+    setIsOwner(false);
+    setWeb3Instance(null);
+  }
+
   return (
-    <ContractContext.Provider value={{ contract, setContract, address, setAddress, isOwner,web3Instance, setWeb3Instance }}>
+    <ContractContext.Provider value={{ contract, setContract, address, setAddress, isOwner,web3Instance, setWeb3Instance, disconnect }}>
       {children}
     </ContractContext.Provider>
   );

@@ -46,12 +46,13 @@ const OwnerScreen = () => {
                 to: contractAddress,
                 data
               })
+              console.log(Web3.utils.toWei(gasAmount,'Gwei'),Web3.utils.toWei('20','Gwei'));
               await web3Instance.eth.sendTransaction({
                 from:address,
                 to: contractAddress,
                 data,
-                gasLimit: gasAmount, // Use the estimated gas value from `estimateGas`
-                gasPrice: Web3.utils.toWei('20','Gwei') // Use the gas price in Wei obtained from `getGasPrice`
+                gasLimit: gasAmount, // gas limit is the maximum amount of gas you are willing to spend for a simple transactio it is 21000
+                gasPrice: Web3.utils.toWei('20','Gwei') // gas price is the price you are willing to pay per unit of gas
               })
 
         } catch (e) {

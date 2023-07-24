@@ -34,7 +34,7 @@ const Navbar = () => {
                 <label htmlFor="bmenub" className="burger pseudo button">menu</label>
 
                 <div className="menu">
-                    {contract ?
+                    {contractContext.contract ?
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Link className="button" to='/minted'>your NFTs</Link>
                             {contractContext.isOwner ?

@@ -10,7 +10,7 @@ const MintedScreen = () => {
             console.log(myNFTs);
             let nfts = [];
             myNFTs.forEach(nft => {
-                nfts.push({ id: nft.id, data: nft.data })
+                nfts.push({ id: nft.id, data: nft.data, exists: nft.exists })
             });
             setNFTs(nfts);
             console.log(nfts);
@@ -26,9 +26,9 @@ const MintedScreen = () => {
     return (
         <div>
             {NFTs.map(nft => {
-                return <div key={nft.id} className='container'>
+                return nft.exists? <div key={nft.id} className='container'>
                 <div style={{ background: nft.data }}>{nft.data}</div>
-            </div>
+            </div>:''
             })}
         </div>
     );

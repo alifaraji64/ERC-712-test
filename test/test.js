@@ -83,4 +83,16 @@ contract('KingPinNFT', accounts => {
       assert.equal(e.code, "INVALID_ARGUMENT")
     }
   })
+
+  it('ownedtokens mapping change on transfer', async()=>{
+    await this.kingPinNFT.transferFrom(accounts[3], accounts[2], 2, {
+      from: accounts[3]
+    })
+
+    let ownedNFTs = await this.kingPinNFT.getOwnedNFTs(accounts[3]);
+    console.log(ownedNFTs);
+    ownedNFTs = await this.kingPinNFT.getOwnedNFTs(accounts[2]);
+    console.log(ownedNFTs);
+  })
+
 })

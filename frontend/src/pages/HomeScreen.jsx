@@ -3,6 +3,9 @@ import { ContractContext } from '../context/contract';
 import { Link, useLoaderData } from 'react-router-dom';
 const HomeScreen = () => {
     const contractContext = useContext(ContractContext);
+    const disconnect = ()=>{
+        contractContext.disconnect();
+    }
     return (
         <>
             <div>
@@ -14,7 +17,7 @@ const HomeScreen = () => {
             </div>
             <div className='flex two center demo'>
             <Link className="button success half" to='/mint'>Mint Your KingpinNFT</Link>
-                {(contractContext.contract && contractContext.address) ? <button className="button error half">Disconnect Your Wallet</button> : null}
+                {(contractContext.contract && contractContext.address) ? <button className="button error half" onClick={disconnect}>Disconnect Your Wallet</button> : null}
             </div>
 
         </>

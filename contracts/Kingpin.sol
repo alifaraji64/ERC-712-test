@@ -12,6 +12,7 @@ contract KingPinNFT is ERC721, Ownable {
     struct Token{
         uint256 id;
         string data;
+        bool exists;
     }
     mapping(address => Token[]) private ownedTokens;
     event AirdropEligibilityUpdated(address owner, bool eligibility);
@@ -22,7 +23,7 @@ contract KingPinNFT is ERC721, Ownable {
     ) ERC721(name, symbol) {}
 
     function addToOwnedTokensMapping(address to, string memory data) internal{
-        ownedTokens[to].push(Token(NFTCount,data));
+        ownedTokens[to].push(Token(NFTCount,data,true));
     }
 
 
@@ -34,11 +35,20 @@ contract KingPinNFT is ERC721, Ownable {
         _airdropEligibility[to] = true;
     }
 
-    function transferFrom(address from, address to, uint256 tokenId) public  override{
+    function transferFrom(address from, address to, uint256 tokenId) public override {
         if (balanceOf(from) == 1) {
             _airdropEligibility[from] = false;
         }
         _airdropEligibility[to] = true;
+        //updating ownedTokens mapping(sender)
+        string memory data;
+        for (uint256 i = 0; i < ownedTokens[from].length; i++) {
+            if(ownedTokens[from][i].id == tokenId){
+                ownedTokens[from][i].exists = false;
+                data = ownedTokens[from][i].data;
+            }
+        }
+        ownedTokens[to].push(Token(tokenId, data, true));
         super.transferFrom(from, to, tokenId);
     }
 
