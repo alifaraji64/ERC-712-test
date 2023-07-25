@@ -8,7 +8,7 @@ const MintScreen = () => {
     const contractContext = useContext(ContractContext);
     const mint = async(data)=>{
         try {
-            let res = await contractContext.contract.methods.mint(contractContext.address,data).send({from: contractContext.address, value:web3.utils.toWei('0.5', 'ether')});
+            let res = await contractContext.contract.methods.mint(contractContext.address,data).send({from: contractContext.address, value:web3.utils.toWei('0.05', 'ether')});
             console.log(res);
             swal("Congratulations, you successfullly minted your NFT. Here is you transaction hash: \n \n"+ res.transactionHash);
         } catch (error) {

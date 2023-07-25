@@ -28,7 +28,7 @@ contract KingPinNFT is ERC721, Ownable {
 
 
     function mint(address to, string memory data) external payable {
-        require(msg.value == 0.5 ether, "Invalid amount of Ether sent");
+        require(msg.value == 0.05 ether, "Invalid amount of Ether sent");
         NFTCount++;
         _safeMint(to, NFTCount);
         addToOwnedTokensMapping(to, data);

@@ -41,7 +41,7 @@ const OwnerScreen = () => {
         })
         try {
             const data = contract.methods.airdrop(addresses,datas).encodeABI();
-            const contractAddress = contractArtifact.networks['5777'].address;
+            const contractAddress = contractArtifact.networks['80001'].address;
             const gasAmount = await web3Instance.eth.estimateGas({
                 to: contractAddress,
                 data

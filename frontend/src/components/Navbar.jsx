@@ -15,7 +15,7 @@ const Navbar = () => {
         const address = accounts[0];
         contractContext.setAddress(address);
         const contractAbi = contractArtifact.abi // The ABI of your smart contract
-        const contractAddress = contractArtifact.networks['5777'].address; // The address of your deployed smart contract
+        const contractAddress = contractArtifact.networks['80001'].address; // The address of your deployed smart contract
         const contractInstance = new web3Instance.eth.Contract(contractAbi, contractAddress);
         setContract(contractInstance);
         contractContext.setContract(contractInstance);

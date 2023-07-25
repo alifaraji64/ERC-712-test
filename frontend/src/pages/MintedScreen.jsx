@@ -25,10 +25,13 @@ const MintedScreen = () => {
     }, []);
     return (
         <div>
+            <center>
+                <h1>My NFTs</h1>
+            </center>
             {NFTs.map(nft => {
-                return nft.exists? <div key={nft.id} className='container'>
-                <div style={{ background: nft.data }}>{nft.data}</div>
-            </div>:''
+                return nft.exists ? <div key={nft.id} className='container'>
+                    <div style={{ background: nft.data }}>{nft.data}</div>
+                </div> : ''
             })}
         </div>
     );
